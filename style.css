@@ -33,6 +33,7 @@ html {
   height: -webkit-fill-available;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  background-color: #eef3ea; /* fallback sólido si el gradiente no carga */
 }
 body {
   height: 100%;
@@ -40,6 +41,7 @@ body {
   overflow: hidden;
   overscroll-behavior: none;
   background: linear-gradient(160deg,#eef3ea,#e3ebe0) fixed;
+  background-color: #eef3ea;
   color: var(--text1);
   font-family: 'Hanken Grotesk', -apple-system, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -67,26 +69,29 @@ ul { list-style: none; }
   overflow-y: auto;
   overflow-x: hidden;
   display: none;
-  padding-bottom: calc(var(--tab-h) + var(--safe-bottom));
+  padding-bottom: 20px;   /* solo espaciado visual, el tab bar ya ocupa su espacio */
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+  min-height: 0;          /* necesario para que flex:1 respete el overflow */
 }
 .view.active { display: block; }
 .view-enter { animation: slideUp .28s cubic-bezier(.25,.46,.45,.94) both; }
 @keyframes slideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
 
 /* ── Tab Bar ── */
+/* Hijo normal del flex column — no fixed — así no deja gaps en iOS */
 .tab-bar {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
+  flex-shrink: 0;
   height: calc(var(--tab-h) + var(--safe-bottom));
   padding-bottom: var(--safe-bottom);
-  background: rgba(247,250,247,.94);
+  background: rgba(247,250,247,.96);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   border-top: 1px solid var(--border);
   display: flex;
   z-index: 100;
+  /* Extiende el fondo sólido debajo del home indicator */
+  box-shadow: 0 40px 0 40px rgba(247,250,247,.96);
 }
 .tab-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px 0 0; color: var(--text3); transition: color .18s; }
 .tab-btn.active { color: var(--primary); }
