@@ -1,0 +1,13 @@
+{
+  "name": "Healthio",
+  "short_name": "Healthio",
+  "description": "Dejá de fumar, día a día",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#eef3ea",
+  "theme_color": "#eef3ea",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

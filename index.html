@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Healthio">
+  <meta name="theme-color" content="#eef3ea">
+  <title>Healthio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" sizes="180x180" href="icon.svg">
+</head>
+<body>
+<div id="app">
+  <div id="view-today"        class="view active"></div>
+  <div id="view-stats"        class="view"></div>
+  <div id="view-achievements" class="view"></div>
+
+  <nav class="tab-bar">
+    <button class="tab-btn active" data-tab="today">
+      <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg></span>
+      <span>Hoy</span>
+    </button>
+    <button class="tab-btn" data-tab="stats">
+      <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M7 14v6M11 9v11M15 5v15M19 11v9"/></svg></span>
+      <span>Stats</span>
+    </button>
+    <button class="tab-btn" data-tab="achievements">
+      <span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M5 3h14l-2 7H7L5 3z"/><path d="M7 10c0 2.76 2.24 5 5 5s5-2.24 5-5"/></svg></span>
+      <span>Logros</span>
+    </button>
+  </nav>
+</div>
+
+<div id="overlay" class="overlay" onclick="App.closeSheet()"></div>
+
+<!-- Sheet: Log Relapse -->
+<div id="sheet-log" class="sheet" style="position:fixed;bottom:0;left:0;right:0;z-index:201;display:none;">
+  <div class="sheet-handle"></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+    <div class="sheet-title" id="log-habit-name">Registrar</div>
+    <button class="sheet-close" onclick="App.closeSheet()">✕</button>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Cantidad</label>
+    <div class="log-count-row">
+      <button class="count-btn" onclick="App.adjustCount(-1)">−</button>
+      <div class="count-val" id="log-count">1</div>
+      <button class="count-btn" onclick="App.adjustCount(1)">+</button>
+    </div>
+    <div style="text-align:center;font-size:13px;color:var(--text3);margin-top:-4px;" id="log-unit-label">veces</div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Nota (opcional)</label>
+    <input id="log-note" class="form-input" type="text" placeholder="¿Dónde? ¿Por qué? ¿Con quién?" maxlength="120">
+  </div>
+  <button type="button" class="btn-primary btn-relapse" onclick="App.saveLog()">Registrar recaída</button>
+  <div id="log-history"></div>
+</div>
+
+<!-- Confirm dialog -->
+<div id="confirm-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;display:none;"></div>
+<div id="confirm-box" class="confirm-dialog" style="display:none;">
+  <div class="confirm-title" id="confirm-title">¿Estás seguro?</div>
+  <div class="confirm-msg"   id="confirm-msg"></div>
+  <div class="confirm-actions">
+    <button style="background:var(--surface3);color:var(--text2);border-radius:var(--r-md);" onclick="App.closeConfirm()">Cancelar</button>
+    <button id="confirm-ok-btn" style="background:var(--negative);color:#fff;border-radius:var(--r-md);" onclick="App.runConfirm()">Eliminar</button>
+  </div>
+</div>
+
+<!-- Badge unlock overlay -->
+<div id="unlock-overlay" class="unlock-overlay" style="display:none;" onclick="App.closeUnlock()">
+  <div class="unlock-card" onclick="event.stopPropagation()">
+    <div class="unlock-label">🏆 ¡Nuevo logro desbloqueado!</div>
+    <span class="unlock-emoji" id="unlock-emoji">🏅</span>
+    <div class="unlock-badge-name" id="unlock-name"></div>
+    <div class="unlock-badge-desc" id="unlock-desc"></div>
+    <button class="unlock-dismiss" onclick="App.closeUnlock()">¡Genial!</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
