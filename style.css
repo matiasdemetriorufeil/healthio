@@ -32,14 +32,12 @@ html {
   height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background-color: rgb(247,250,247); /* mismo color que tab-bar — tapa cualquier gap en iOS */
+  background: rgb(247,250,247);
 }
 body {
   height: 100%;
-  overflow: hidden;
   overscroll-behavior: none;
   background: rgb(247,250,247);
-  background-color: rgb(247,250,247);
   color: var(--text1);
   font-family: 'Hanken Grotesk', -apple-system, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -51,11 +49,14 @@ ul { list-style: none; }
 /* ── App Shell ── */
 #app {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   padding-top: env(safe-area-inset-top);
-  background: linear-gradient(160deg,#eef3ea,#e3ebe0) fixed;
+  background: linear-gradient(160deg,#eef3ea,#e3ebe0);
 }
 
 /* ── Views ── */
@@ -76,12 +77,14 @@ ul { list-style: none; }
 /* ── Tab Bar ── */
 .tab-bar {
   flex-shrink: 0;
-  height: calc(var(--tab-h) + var(--safe-bottom));
-  padding-bottom: var(--safe-bottom);
+  min-height: var(--tab-h);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   background: rgb(247,250,247);
   border-top: 1px solid var(--border);
   display: flex;
   z-index: 100;
+  /* Pinta 100px extra hacia abajo por si #app no cubre el último pixel en iOS */
+  box-shadow: 0 100px 0 100px rgb(247,250,247);
 }
 .tab-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px 0 0; color: var(--text3); transition: color .18s; }
 .tab-btn.active { color: var(--primary); }
