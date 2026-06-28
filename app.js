@@ -738,6 +738,12 @@ const App = {
     document.getElementById('log-count').textContent      = '1';
     document.getElementById('log-unit-label').textContent = 'cigarrillos';
     document.getElementById('log-note').value             = '';
+    const _now = new Date();
+    const _p   = n => String(n).padStart(2, '0');
+    document.getElementById('log-datetime').value =
+      `${_now.getFullYear()}-${_p(_now.getMonth()+1)}-${_p(_now.getDate())}T${_p(_now.getHours())}:${_p(_now.getMinutes())}`;
+    document.getElementById('log-datetime').max =
+      `${_now.getFullYear()}-${_p(_now.getMonth()+1)}-${_p(_now.getDate())}T${_p(_now.getHours())}:${_p(_now.getMinutes())}`;
 
     const recent = DB.getLogs()
       .filter(l => l.habitId === FUMAR.id)
@@ -768,11 +774,13 @@ const App = {
   },
 
   saveLog() {
-    const logs = DB.getLogs();
+    const dtVal = document.getElementById('log-datetime').value;
+    const ts    = dtVal ? new Date(dtVal).getTime() : Date.now();
+    const logs  = DB.getLogs();
     logs.push({
       id:      'l' + Date.now(),
       habitId: FUMAR.id,
-      ts:      Date.now(),
+      ts,
       count:   App.logCount,
       note:    document.getElementById('log-note').value.trim(),
     });

@@ -30,18 +30,16 @@
 
 html {
   height: 100%;
-  height: -webkit-fill-available;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background-color: #eef3ea; /* fallback sólido si el gradiente no carga */
+  background-color: rgb(247,250,247); /* mismo color que tab-bar — tapa cualquier gap en iOS */
 }
 body {
   height: 100%;
-  height: -webkit-fill-available;
   overflow: hidden;
   overscroll-behavior: none;
-  background: linear-gradient(160deg,#eef3ea,#e3ebe0) fixed;
-  background-color: #eef3ea;
+  background: rgb(247,250,247);
+  background-color: rgb(247,250,247);
   color: var(--text1);
   font-family: 'Hanken Grotesk', -apple-system, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -52,15 +50,12 @@ ul { list-style: none; }
 
 /* ── App Shell ── */
 #app {
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  /* fallback → dvh para iOS 16+, -webkit-fill-available para iOS 15 */
-  height: 100vh;
-  height: -webkit-fill-available;
-  height: 100dvh;
   padding-top: env(safe-area-inset-top);
-  position: relative;
-  overflow: hidden;
+  background: linear-gradient(160deg,#eef3ea,#e3ebe0) fixed;
 }
 
 /* ── Views ── */
@@ -79,19 +74,14 @@ ul { list-style: none; }
 @keyframes slideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
 
 /* ── Tab Bar ── */
-/* Hijo normal del flex column — no fixed — así no deja gaps en iOS */
 .tab-bar {
   flex-shrink: 0;
   height: calc(var(--tab-h) + var(--safe-bottom));
   padding-bottom: var(--safe-bottom);
-  background: rgba(247,250,247,.96);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  background: rgb(247,250,247);
   border-top: 1px solid var(--border);
   display: flex;
   z-index: 100;
-  /* Extiende el fondo sólido debajo del home indicator */
-  box-shadow: 0 40px 0 40px rgba(247,250,247,.96);
 }
 .tab-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px 0 0; color: var(--text3); transition: color .18s; }
 .tab-btn.active { color: var(--primary); }
