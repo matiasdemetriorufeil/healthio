@@ -29,13 +29,18 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 html {
-  height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   background: rgb(247,250,247);
 }
 body {
-  height: 100%;
+  /* Anclado al viewport: impide scroll y bounce en iOS */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
   overscroll-behavior: none;
   background: rgb(247,250,247);
   color: var(--text1);
@@ -48,7 +53,7 @@ ul { list-style: none; }
 
 /* ── App Shell ── */
 #app {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -83,8 +88,6 @@ ul { list-style: none; }
   border-top: 1px solid var(--border);
   display: flex;
   z-index: 100;
-  /* Pinta 100px extra hacia abajo por si #app no cubre el último pixel en iOS */
-  box-shadow: 0 100px 0 100px rgb(247,250,247);
 }
 .tab-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px 0 0; color: var(--text3); transition: color .18s; }
 .tab-btn.active { color: var(--primary); }

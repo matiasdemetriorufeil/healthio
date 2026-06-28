@@ -1,4 +1,4 @@
-const CACHE = 'healthio-v17';
+const CACHE = 'healthio-v18';
 const ASSETS = ['./', './index.html', './style.css', './app.js', './manifest.json', './icon.svg', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
