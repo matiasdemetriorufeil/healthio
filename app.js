@@ -621,7 +621,7 @@ const App = {
     function heatColor(ts) {
       const inYear    = ts >= yearStart && ts < yearEnd;
       const isFuture  = ts > todayTs;
-      const noData    = ts < trackStart;
+      const noData    = ts < trackStart && !(ts in dayMap);
       if (!inYear || isFuture || noData) return '#dde0db'; // gris: sin registro
       const n = dayMap[ts] || 0;
       if (n === 0) return '#6aab65';   // verde: sin fumar
@@ -775,7 +775,7 @@ const App = {
 
   saveLog() {
     const dtVal = document.getElementById('log-datetime').value;
-    const ts    = dtVal ? new Date(dtVal).getTime() : Date.now();
+    const ts    = Math.min(dtVal ? new Date(dtVal).getTime() : Date.now(), Date.now());
     const logs  = DB.getLogs();
     logs.push({
       id:      'l' + Date.now(),
